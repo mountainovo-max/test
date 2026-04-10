@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>闫大头的个人测试✨</title>
+<style>
+  *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;
+  }
+  body{
+    background:#fdf2f8;
+    background:linear-gradient(120deg,#fef7fb 0%,#fcf1f7 100%);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    padding:20px;
+  }
+  .container{
+    background:#fff;
+    width:100%;
+    max-width:620px;
+    border-radius:32px;
+    box-shadow:0 10px 50px rgba(236,72,153,0.08);
+    padding:40px 36px;
+    position:relative;
+    overflow:hidden;
+  }
+  .intro{
+    text-align:center;
+    margin-bottom:32px;
+  }
+  .intro h1{
+    font-size:28px;
+    color:#2d3748;
+    margin-bottom:12px;
+    font-weight:600;
+  }
+  .start-btn,.restart-btn,.submit-btn{
+    background:linear-gradient(135deg,#ec4899 0%,#db2777 100%);
+    color:#fff;
+    border:none;
+    border-radius:20px;
+    padding:16px 32px;
+    font-size:16px;
+    font-weight:500;
+    cursor:pointer;
+    width:100%;
+    margin-top:20px;
+  }
+  .progress{
+    color:#718096;
+    font-size:14px;
+    margin-bottom:24px;
+    text-align:center;
+  }
+  .question{
+    display:none;
+    margin-bottom:28px;
+  }
+  .question.active{
+    display:block;
+  }
+  .question-text{
+    font-size:18px;
+    color:#2d3748;
+    margin-bottom:20px;
+    line-height:1.6;
+  }
+  .option{
+    background:#f9fafb;
+    border:1px solid #f0f0f0;
+    border-radius:20px;
+    padding:18px 24px;
+    margin-bottom:12px;
+    width:100%;
+    text-align:left;
+    font-size:15px;
+    color:#4a5568;
+    cursor:pointer;
+  }
+  .option.selected{
+    background:#ec4899!important;
+    color:#fff!important;
+    border-color:#db2777!important;
+  }
+  .result{
+    display:none;
+    padding:32px 24px;
+    border-radius:24px;
+    margin-top:20px;
+    background:#fef7fb;
+  }
+  .result h2{
+    font-size:22px;
+    color:#ec4899;
+    text-align:center;
+    margin-bottom:16px;
+  }
+  .jiexi{
+    font-size:15px;
+    line-height:1.7;
+    color:#444;
+    margin-bottom:16px;
+  }
+  .peidui{
+    background:#fff;
+    border-radius:16px;
+    padding:16px;
+    margin:16px 0;
+  }
+  .peidui p{
+    margin:6px 0;
+    font-size:15px;
+  }
+  .jianyi{
+    background:#fff;
+    border-radius:16px;
+    padding:16px;
+    font-size:15px;
+    line-height:1.7;
+    color:#444;
+    margin-top:10px;
+  }
+  #submitBox{
+    display:none;
+    text-align:center;
+    margin-top:20px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="intro" id="welcome">
+    <h1>闫大头的个人测试</h1>
+    <button class="start-btn" onclick="startTest()">开始测试 🚀</button>
+  </div>
+
+  <div class="progress" id="progress"></div>
+
+  <div class="question" id="q1"><div class="question-text">1. 周末你更想？</div>
+    <button class="option" onclick="choose('tansuo')">A. 出门探店/见朋友/尝新鲜</button>
+    <button class="option" onclick="choose('wenzhen')">B. 宅家休息，啥也不想干</button>
+    <button class="option" onclick="choose('qingxing')">C. 安排学习/搞搞提升</button>
+    <button class="option" onclick="choose('bailan')">D. 按固定节奏放松，不折腾</button>
+  </div>
+  <div class="question" id="q2"><div class="question-text">2. 面对新工作，你更在意？</div>
+    <button class="option" onclick="choose('tansuo')">A. 有没有意思、能不能学到东西</button>
+    <button class="option" onclick="choose('wenzhen')">B. 稳不稳定、会不会加班</button>
+    <button class="option" onclick="choose('qingxing')">C. 薪资前景、发展空间</button>
+    <button class="option" onclick="choose('bailan')">D. 轻不轻松、压不压力</button>
+  </div>
+  <div class="question" id="q3"><div class="question-text">3. 领导突然给你新任务，你第一反应？</div>
+    <button class="option" onclick="choose('tansuo')">A. 有点兴奋，想试试</button>
+    <button class="option" onclick="choose('wenzhen')">B. 有点慌，怕做不好</button>
+    <button class="option" onclick="choose('qingxing')">C. 先看有没有好处</button>
+    <button class="option" onclick="choose('bailan')">D. 只想安静摸鱼</button>
+  </div>
+  <div class="question" id="q4"><div class="question-text">4. 你更害怕哪种生活？</div>
+    <button class="option" onclick="choose('tansuo')">A. 一成不变、重复枯燥</button>
+    <button class="option" onclick="choose('wenzhen')">B. 动荡不安、没安全感</button>
+    <button class="option" onclick="choose('qingxing')">C. 努力半天没回报</button>
+    <button class="option" onclick="choose('bailan')">D. 天天加班、累成狗</button>
+  </div>
+  <div class="question" id="q5"><div class="question-text">5. 选工作，你第一眼先看？</div>
+    <button class="option" onclick="choose('tansuo')">A. 行业新不新、有没有前景</button>
+    <button class="option" onclick="choose('wenzhen')">B. 公司规模、体系正规吗</button>
+    <button class="option" onclick="choose('qingxing')">C. 薪资待遇、上升空间</button>
+    <button class="option" onclick="choose('bailan')">D. 加班多不多、压不压力</button>
+  </div>
+  <div class="question" id="q6"><div class="question-text">6. 遇到陌生领域，你会？</div>
+    <button class="option" onclick="choose('tansuo')">A. 好奇想冲进去试试</button>
+    <button class="option" onclick="choose('wenzhen')">B. 先观察，稳妥再动</button>
+    <button class="option" onclick="choose('qingxing')">C. 算性价比再决定</button>
+    <button class="option" onclick="choose('bailan')">D. 能不碰就不碰</button>
+  </div>
+  <div class="question" id="q7"><div class="question-text">7. 你理想工作节奏是？</div>
+    <button class="option" onclick="choose('tansuo')">A. 多变有趣，不无聊</button>
+    <button class="option" onclick="choose('wenzhen')">B. 稳定规律，不折腾</button>
+    <button class="option" onclick="choose('qingxing')">C. 多劳多得，成长快</button>
+    <button class="option" onclick="choose('bailan')">D. 轻松简单，少管事</button>
+  </div>
+  <div class="question" id="q8"><div class="question-text">8. 朋友约你冒险新项目，你会？</div>
+    <button class="option" onclick="choose('tansuo')">A. 立刻心动想加入</button>
+    <button class="option" onclick="choose('wenzhen')">B. 担心风险，不太敢</button>
+    <button class="option" onclick="choose('qingxing')">C. 先算收益值不值</button>
+    <button class="option" onclick="choose('bailan')">D. 只想在家躺平</button>
+  </div>
+  <div class="question" id="q9"><div class="question-text">9. 你对“升职”的态度？</div>
+    <button class="option" onclick="choose('tansuo')">A. 有机会就冲</button>
+    <button class="option" onclick="choose('wenzhen')">B. 顺其自然，不强求</button>
+    <button class="option" onclick="choose('qingxing')">C. 看性价比，太累就算</button>
+    <button class="option" onclick="choose('bailan')">D. 不想担责任，算了</button>
+  </div>
+  <div class="question" id="q10"><div class="question-text">10. 工作做熟了之后，你会？</div>
+    <button class="option" onclick="choose('tansuo')">A. 觉得无聊想换内容</button>
+    <button class="option" onclick="choose('wenzhen')">B. 觉得安心，很舒服</button>
+    <button class="option" onclick="choose('qingxing')">C. 想优化效率，多产出</button>
+    <button class="option" onclick="choose('bailan')">D. 保持现状，别变就好</button>
+  </div>
+  <div class="question" id="q11"><div class="question-text">11. 你更像哪种人？</div>
+    <button class="option" onclick="choose('tansuo')">A. 敢想敢试，爱新鲜</button>
+    <button class="option" onclick="choose('wenzhen')">B. 稳重踏实，求安全</button>
+    <button class="option" onclick="choose('qingxing')">C. 目标明确，很理性</button>
+    <button class="option" onclick="choose('bailan')">D. 佛系躺平，求轻松</button>
+  </div>
+  <div class="question" id="q12"><div class="question-text">12. 突然换岗位/换行业，你会？</div>
+    <button class="option" onclick="choose('tansuo')">A. 兴奋期待新挑战</button>
+    <button class="option" onclick="choose('wenzhen')">B. 焦虑不安怕适应不了</button>
+    <button class="option" onclick="choose('qingxing')">C. 分析利弊再决定</button>
+    <button class="option" onclick="choose('bailan')">D. 极度抗拒，不想变</button>
+  </div>
+  <div class="question" id="q13"><div class="question-text">13. 你上班的动力主要是？</div>
+    <button class="option" onclick="choose('tansuo')">A. 成长感与新鲜感</button>
+    <button class="option" onclick="choose('wenzhen')">B. 稳定工资与安全感</button>
+    <button class="option" onclick="choose('qingxing')">C. 赚钱与未来发展</button>
+    <button class="option" onclick="choose('bailan')">D. 轻松不心累</button>
+  </div>
+  <div class="question" id="q14"><div class="question-text">14. 遇到加班，你的态度？</div>
+    <button class="option" onclick="choose('tansuo')">A. 能学到东西就接受</button>
+    <button class="option" onclick="choose('wenzhen')">B. 偶尔可以，别常态</button>
+    <button class="option" onclick="choose('qingxing')">C. 给钱多就干</button>
+    <button class="option" onclick="choose('bailan')">D. 达咩，绝对拒绝</button>
+  </div>
+  <div class="question" id="q15"><div class="question-text">15. 你更喜欢哪种团队？</div>
+    <button class="option" onclick="choose('tansuo')">A. 年轻活跃、氛围轻松</button>
+    <button class="option" onclick="choose('wenzhen')">B. 成熟正规、流程清晰</button>
+    <button class="option" onclick="choose('qingxing')">C. 结果导向、多劳多得</button>
+    <button class="option" onclick="choose('bailan')">D. 没人管、自由不打扰</button>
+  </div>
+  <div class="question" id="q16"><div class="question-text">16. 未来三年你最想要？</div>
+    <button class="option" onclick="choose('tansuo')">A. 多见世面、快速成长</button>
+    <button class="option" onclick="choose('wenzhen')">B. 安稳踏实、不出差错</button>
+    <button class="option" onclick="choose('qingxing')">C. 升职加薪、收入提高</button>
+    <button class="option" onclick="choose('bailan')">D. 轻松快乐、少点烦恼</button>
+  </div>
+  <div class="question" id="q17"><div class="question-text">17. 做选择时你通常？</div>
+    <button class="option" onclick="choose('tansuo')">A. 凭感觉跟心动走</button>
+    <button class="option" onclick="choose('wenzhen')">B. 求稳妥不冒险</button>
+    <button class="option" onclick="choose('qingxing')">C. 精打细算看收益</button>
+    <button class="option" onclick="choose('bailan')">D. 怎么省事怎么来</button>
+  </div>
+  <div class="question" id="q18"><div class="question-text">18. 你最讨厌的工作状态？</div>
+    <button class="option" onclick="choose('tansuo')">A. 重复无聊、没长进</button>
+    <button class="option" onclick="choose('wenzhen')">B. 变动频繁、心慌慌</button>
+    <button class="option" onclick="choose('qingxing')">C. 付出回报不成正比</button>
+    <button class="option" onclick="choose('bailan')">D. 事多屁事多、心累</button>
+  </div>
+  <div class="question" id="q19"><div class="question-text">19. 别人对你评价更接近？</div>
+    <button class="option" onclick="choose('tansuo')">A. 敢闯敢试、脑洞大</button>
+    <button class="option" onclick="choose('wenzhen')">B. 稳重靠谱、很安心</button>
+    <button class="option" onclick="choose('qingxing')">C. 现实理性、不冲动</button>
+    <button class="option" onclick="choose('bailan')">D. 佛系随和、不爱卷</button>
+  </div>
+  <div class="question" id="q20"><div class="question-text">20. 如果可以选，你想要？</div>
+    <button class="option" onclick="choose('tansuo')">A. 有趣但有挑战的工作</button>
+    <button class="option" onclick="choose('wenzhen')">B. 稳定规律的工作</button>
+    <button class="option" onclick="choose('qingxing')">C. 高薪成长快的工作</button>
+    <button class="option" onclick="choose('bailan')">D. 轻松不加班的工作</button>
+  </div>
+
+  <div id="submitBox">
+    <button class="submit-btn">✅ 提交并查看结果</button>
+  </div>
+
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+  let current = 1;
+  const total = 20;
+  let count = { tansuo:0, wenzhen:0, qingxing:0, bailan:0 };
+
+  function startTest() {
+    document.getElementById('welcome').style.display = 'none';
+    showQuestion(1);
+  }
+
+  function showQuestion(n) {
+    document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+    document.getElementById('q'+n).classList.add('active');
+    document.getElementById('progress').innerText = `第 ${n} / ${total} 题`;
+  }
+
+  function choose(type) {
+    count[type]++;
+    let opts = document.querySelectorAll(`#q${current} .option`);
+    opts.forEach(o => o.classList.remove('selected'));
+    event.target.classList.add('selected');
+
+    if (current == total) {
+      document.getElementById('submitBox').style.display = 'block';
+      return;
+    }
+// 延迟 500 毫秒再跳题，让高亮显示出来
+  setTimeout(() => {
+    current++;
+    showQuestion(current);
+  }, 500);
+}
+
+  document.querySelector('.submit-btn').onclick = showResult;
+
+  function showResult() {
+    document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+    document.getElementById('progress').style.display = 'none';
+    document.getElementById('submitBox').style.display = 'none';
+    const res = document.getElementById('result');
+
+    let arr = [
+      {key:'tansuo', val:count.tansuo},
+      {key:'wenzhen', val:count.wenzhen},
+      {key:'qingxing', val:count.qingxing},
+      {key:'bailan', val:count.bailan}
+    ];
+    arr.sort((a,b)=>b.val - a.val);
+    let first = arr[0];
+    let second = arr[1];
+    let diff = first.val - second.val;
+    let typeResult = '';
+
+    if(diff <= 2){
+      let a = first.key, b = second.key;
+      if((a=='tansuo'&&b=='wenzhen')||(a=='wenzhen'&&b=='tansuo')) typeResult='AB';
+      else if((a=='tansuo'&&b=='qingxing')||(a=='qingxing'&&b=='tansuo')) typeResult='AC';
+      else if((a=='wenzhen'&&b=='qingxing')||(a=='qingxing'&&b=='wenzhen')) typeResult='BC';
+      else if((a=='wenzhen'&&b=='bailan')||(a=='bailan'&&b=='wenzhen')) typeResult='BD';
+      else if((a=='qingxing'&&b=='bailan')||(a=='bailan'&&b=='qingxing')) typeResult='CD';
+      else typeResult=first.key;
+    }else{
+      typeResult=first.key;
+    }
+
+    let html = '';
+    switch(typeResult){
+      case 'tansuo':
+        html=`<h2>自由探索家</h2>
+<div class="jiexi">你热爱新鲜与挑战，追求快速成长，讨厌一成不变的重复生活，适应力极强。</div>
+<div class="peidui"><p>新城匹配度：<b>90%</b></p><p>利拉伐匹配度：<b>30%</b></p></div>
+<div class="jianyi">💡 建议：你更适合有变化、能学习、有成长空间的环境，稳定但枯燥的工作会让你失去热情。</div>`; break;
+      case 'wenzhen':
+        html=`<h2>稳扎实干家</h2>
+<div class="jiexi">你踏实稳重，重视安全感与长期积累，喜欢规律稳定的工作，不喜欢频繁变动。</div>
+<div class="peidui"><p>新城匹配度：<b>35%</b></p><p>利拉伐匹配度：<b>95%</b></p></div>
+<div class="jianyi">💡 建议：你最适合体系成熟、节奏稳定、靠谱安全的平台，长期深耕会让你越来越优秀。</div>`; break;
+      case 'qingxing':
+        html=`<h2>人间清醒规划师</h2>
+<div class="jiexi">你理性务实，目标清晰，懂得在成长与安稳之间找到平衡，不盲目也不躺平。</div>
+<div class="peidui"><p>新城匹配度：<b>65%</b></p><p>利拉伐匹配度：<b>70%</b></p></div>
+<div class="jianyi">💡 建议：你适配性极强，无论哪种环境都能发挥优势，按你当下最想要的方向选择即可。</div>`; break;
+      case 'bailan':
+        html=`<h2>快乐安稳星人</h2>
+<div class="jiexi">你追求轻松舒服，不爱内卷，不喜欢压力与竞争，希望工作简单、生活舒心。</div>
+<div class="peidui"><p>新城匹配度：<b>20%</b></p><p>利拉伐匹配度：<b>98%</b></p></div>
+<div class="jianyi">💡 建议：你最适合压力小、氛围轻松、不加班的稳定工作，舒服自在比强行努力更重要。</div>`; break;
+      case 'AB':
+        html=`<h2>成长稳健派</h2>
+<div class="jiexi">你既追求成长，也重视安稳，属于稳中敢进、可盐可甜的全能型人格。</div>
+<div class="peidui"><p>新城匹配度：<b>72%</b></p><p>利拉伐匹配度：<b>70%</b></p></div>
+<div class="jianyi">💡 建议：你两边都非常适合，想突破就选新城，想安心就选利拉伐。</div>`; break;
+      case 'AC':
+        html=`<h2>理性探索者</h2>
+<div class="jiexi">你有好奇心但不冲动，会理性规划成长路线，目标感强，稳扎稳打前进。</div>
+<div class="peidui"><p>新城匹配度：<b>80%</b></p><p>利拉伐匹配度：<b>50%</b></p></div>
+<div class="jianyi">💡 建议：你更适合有成长空间、目标清晰的平台，能让你快速实现价值。</div>`; break;
+      case 'BC':
+        html=`<h2>稳健规划者</h2>
+<div class="jiexi">你踏实靠谱，也追求进步，希望在稳定中悄悄变优秀，不冒风险也不落后。</div>
+<div class="peidui"><p>新城匹配度：<b>52%</b></p><p>利拉伐匹配度：<b>82%</b></p></div>
+<div class="jianyi">💡 建议：稳定中带成长的环境最适合你，长期积累会收获满满。</div>`; break;
+      case 'BD':
+        html=`<h2>温和安稳派</h2>
+<div class="jiexi">你性格温和，喜欢轻松安稳，不内卷、不折腾，简单舒服就是最好的生活。</div>
+<div class="peidui"><p>新城匹配度：<b>32%</b></p><p>利拉伐匹配度：<b>92%</b></p></div>
+<div class="jianyi">💡 建议：低压力、稳定轻松的工作最让你幸福，不必强迫自己参与竞争。</div>`; break;
+      case 'CD':
+        html=`<h2>佛系清醒派</h2>
+<div class="jiexi">你活得通透，不盲目内卷，也不彻底摆烂，追求性价比与生活平衡。</div>
+<div class="peidui"><p>新城匹配度：<b>45%</b></p><p>利拉伐匹配度：<b>80%</b></p></div>
+<div class="jianyi">💡 建议：稳定轻松又有小成长的工作最适合你，开心舒适最重要。</div>`; break;
+    }
+
+    html += `<button class="restart-btn" onclick="restart()">重新测试 🔄</button>`;
+    res.innerHTML = html;
+    res.style.display = 'block';
+  }
+
+  function restart() {
+    current = 1;
+    count = { tansuo:0, wenzhen:0, qingxing:0, bailan:0 };
+    document.getElementById('result').style.display = 'none';
+    document.getElementById('progress').style.display = 'block';
+    showQuestion(1);
+  }
+</script>
+</body>
+</html>
